@@ -1,0 +1,141 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <include file="example.xml"/>
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+        <action name="registeruser" class="com.trading.ot.actions.UserAction" method="addUsers">
+            <result name="REGISTER">/pages-login.jsp</result>
+            <result name="ERROR">/pages-register.jsp</result>
+        </action>
+        
+        <action name="loginuser" class="com.trading.ot.actions.UserAction" method="checkValidUser">
+            <result name="USER">/user-dashboard.jsp</result>
+            <result name="ADMINUSER">/admin-dashboard.jsp</result>
+            <result name="ERRORLOGIN">/pages-login.jsp</result>
+        </action>
+        
+        <action name="forgetpass" class="com.trading.ot.actions.UserAction" method="forgetPassword">
+       
+            <result name="CHANGEPASS">/changepassword.jsp</result>
+            <result name="ERRORLOGIN">/pages-login.jsp</result>
+        </action>
+        
+        <action name="reportstock" class="com.trading.ot.actions.StockAction" method="StockReportAction">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="REPORTSTOCK">/admin-dashboard.jsp</result>
+        </action>
+        
+        <action name="reportstockuser" class="com.trading.ot.actions.StockAction" method="StockReportAction">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="REPORTSTOCK">/user-dashboard.jsp</result>
+        </action>
+         <action name="reportinvestment" class="com.trading.ot.actions.UserAction" method="showInvestment">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="TOTALINVESTMENT">/user-dashboard.jsp</result>
+        </action>
+        <action name="reportuser" class="com.trading.ot.actions.UserAction" method="reportUserAction">
+            <result name="REPORTUSER">/userPromotion.jsp</result>
+        </action>
+        
+         <action name="promoteuser" class="com.trading.ot.actions.UserAction" method="promoteUser">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="PROMOTEUSER">/success-user.jsp</result>
+        </action>
+        
+        <action name="reportinfo" class="com.trading.ot.actions.StockAction" method="StockInfo">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="REPORTINFO">/admin-dashboard.jsp</result>
+        </action>
+        
+        <action name="reportstockindex" class="com.trading.ot.actions.StockAction" method="StockReportAction">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="REPORTSTOCK">/index.jsp</result>
+        </action>
+        <action name="otppassword" class="com.trading.ot.actions.UserAction" method="updateOtpPassword">
+            <result name="UPDATEUSERPASSWORD">/pages-login.jsp</result>
+        </action>
+        <action name="reportupdatestock" class="com.trading.ot.actions.StockAction" method="StockUpdateAction">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="REPORTSTOCK">/update-stock.jsp</result>
+        </action>
+        
+        <action name="reportviewstock" class="com.trading.ot.actions.StockAction" method="StockAddToCartAction">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="REPORTSTOCK">/stocksforusers.jsp</result>
+        </action>
+        <action name="showorderlist" class="com.trading.ot.actions.StockAction" method="StockOrderAction">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="REPORTORDERSTOCK">/user-portfolio.jsp</result>
+        </action>
+        <action name="updatestock" class="com.trading.ot.actions.StockAction" method="updateStock">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="UPDATESTOCK">/success-stock.jsp</result>
+        </action>
+        
+        <action name="addtocart" class="com.trading.ot.actions.StockAction" method="addToCart">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="ADDTOCART">/cart-quantity.jsp</result>
+        </action>
+        
+        <action name="updatecsv" class="com.trading.ot.actions.StockAction" method="updateStockList">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="UPDATESTOCKLIST">/success-stock.jsp</result>
+        </action>
+        
+        <action name="deletestock" class="com.trading.ot.actions.StockAction" method="deleteStock">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="DELETESTOCK">/success-stock.jsp</result>
+        </action>
+        
+        <action name="updateuser" class="com.trading.ot.actions.UserAction" method="updateUser">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="UPDATEUSER">/success-updateuser.jsp</result>
+        </action>
+        
+        <action name="updateadmin" class="com.trading.ot.actions.UserAction" method="updateUser">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="UPDATEUSER">/admin-profile.jsp</result>
+        </action>
+        
+           <action name="buystock" class="com.trading.ot.actions.StockAction" method="buyStock">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="BUYSTOCK">/success-buy.jsp</result>
+        </action>
+        <action name="removecart" class="com.trading.ot.actions.StockAction" method="deleteWishlist">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="REMOVEWISHLIST">/success-remove.jsp</result>
+        </action>
+          <action name="sellstock" class="com.trading.ot.actions.StockAction" method="sellStock">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="SELLSTOCK">/success-sell.jsp</result>
+        </action>
+        
+        <action name="changepassword" class="com.trading.ot.actions.UserAction" method="updateUserPassword">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="UPDATEUSERPASSWORD">/success-updateuser.jsp</result>
+        </action>
+        
+        <action name="changeadminpassword" class="com.trading.ot.actions.UserAction" method="updateUserPassword">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="UPDATEUSERPASSWORD">/admin-profile.jsp</result>
+        </action>
+        
+         <action name="showwishlist" class="com.trading.ot.actions.StockAction" method="wishList">
+             <result name="LOGOUT1">/logout.jsp</result>
+            <result name="WISHLIST">/viewCart.jsp</result>
+        </action>
+        
+        <action name="logout" class="com.trading.ot.actions.UserAction" method="logout">
+            <result name="LOGOUT">/logout.jsp</result>
+        </action>
+        
+        <action name="checksession" class="com.trading.ot.actions.UserAction" method="sessionout">
+            <result name="LOGOUT1">/logout.jsp</result>
+            <result name="PASS">/admin-dashboard.jsp</result>
+        </action>
+        
+    </package>
+</struts>

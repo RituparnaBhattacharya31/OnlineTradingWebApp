@@ -1,0 +1,53 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25 Jan, 2022, 12:33:28 AM
+    Author     : Suraj Kumar
+*/
+
+body{  
+  background-color: blueviolet;
+   
+}  
+.container {  
+    padding-left: 400px; 
+    padding-right: 400px;
+    background-color: green;  
+}  
+  
+input[type=text], input[type=password], textarea {  
+  width: 100%;  
+  padding: 15px;  
+  margin: 5px 0 22px 0;  
+  display: inline-block;  
+  border-bottom-color: black;  
+  background: #f1f1f1;  
+}  
+input[type=text]:focus, input[type=password]:focus {  
+  background-color: orange;  
+  outline: none;  
+}  
+ div {  
+            padding: 10px 0;  
+         }  
+hr {  
+  border: 1px solid #f1f1f1;  
+  margin-bottom: 25px;  
+}  
+
+.btn {  
+  background-color: blue;  
+  color: white;
+  height: 40px;
+  border: black;  
+  cursor: pointer;  
+  width: 49%;  
+  opacity: 0.8;  
+}  
+.btn:hover {  
+  opacity: 1;  
+}
+.login{font-size: 50px; color: black}
