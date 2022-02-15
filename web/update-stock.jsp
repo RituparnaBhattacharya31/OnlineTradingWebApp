@@ -267,6 +267,7 @@
                                                         
                                                             <td style="display:none"><s:property value="stockId" />"</td>
                                                             <td><s:property value="stockId" /></td>
+                                                           <td style="display:none;"><s:property value="stockName" /></td>
                                                             <td><input type="text" name="stockName" id='stname_<s:property value="stockId" />' value="<s:property value="stockName" />"></td>
                                                             <td><input type="text" name="price" id='price_<s:property value="stockId" />' value="<s:property value="price" />"></td>
                                                             <td><input type="number" name="availability" id='avail_<s:property value="stockId" />' value="<s:property value="availability" />"></td>
@@ -298,6 +299,7 @@
                             </div><!-- End Update Stocks -->
                              
                             <div style="margin:auto">
+                                <span style="color:blue; font-size: 16px;"> *Download the csv from this link and upload it below</span><br><a href="https://drive.google.com/file/d/19n-atmyC7YX8Iybv_fKlrFr3zQ36_D_e/view?usp=sharing" target="_blank" rel="noopener noreferrer"> Click Here to download!</a><br>
                                 <span style="color:red; font-size: 14px;" id="result2"></span><br>
                                             
                                    

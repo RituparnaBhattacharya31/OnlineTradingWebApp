@@ -256,6 +256,7 @@
                                                         <td style="display:none"><s:property value="stockId" />"</td>
                                                         <td><s:property value="stockId" /></td>
                                                         <td style="display:none"><input type="text" name="userId" id='userId' value="<s:property value="#session.userId" />"></td>
+                                                        <td style="display:none"><s:property value="stockName" />"</td>
                                                         <td><input type="text" name="stockName" id='stname_<s:property value="stockId" />' value="<s:property value="stockName" />"></td>
                                                         <td><input type="text" name="price" id='price_<s:property value="stockId" />' value="<s:property value="price" />"></td>
                                                         <td><input type="text" name="availability" id='avail_<s:property value="stockId" />' value="<s:property value="availability" />"></td>
