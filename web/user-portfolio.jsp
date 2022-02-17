@@ -43,7 +43,8 @@
                 var quantity = document.getElementById("qty_" + oid).value;
                 var sellQuantity = document.getElementById("sqty_" + oid).value;
                 var totalPrice = document.getElementById("tprice_" + oid).value;
-
+                if(sellQuantity>0 && sellQuantity!="" && quantity>=sellQuantity)
+                {
                 $.ajax({
                     url: 'sellstock',
                     method: 'POST',
@@ -56,6 +57,13 @@
                         console.log('Error occured!!');
                     }
                 });
+               }
+               else
+               {
+                  var msg="Please enter a valid sell quantity"; 
+                  $('#result3').html(msg);
+               }
+            
             }
         </script>
     </head>
@@ -114,7 +122,7 @@
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
                                 <h6><s:property value="#session.name" /></h6>
-                                <span>Web Designer</span>
+                               
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -221,7 +229,7 @@
                        
                         <a href="showorderlist.action?userId=<s:property value="#session.userId"/>"><button type="button" class="btn btn-outline-primary">Show updated stocks</button></a>
                         <span id="result"></span>
-
+                        <span style="color:red;" id="result3"></span>
                         <table class="table table-borderless">
                             <s:if test="noData==false">
                                 <thead>      

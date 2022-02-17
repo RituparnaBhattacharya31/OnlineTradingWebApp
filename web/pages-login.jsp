@@ -29,13 +29,15 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<scipt src="validation.js"></script>
   
 </head>
 
 <body>
 
   <main>
+   <span id="result"></span>
     <div class="container">
 
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
@@ -53,7 +55,7 @@
               <div class="card mb-3">
 
                 <div class="card-body">
-
+                   
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
                     <p class="text-center small">Enter your email & password to login</p>

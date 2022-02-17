@@ -31,8 +31,56 @@
 
         <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
-
-
+        <script>
+             function onlyNumberKey(evt) {
+                // Only ASCII character in that range allowed
+                var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+                if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                    return false;
+                return true;
+            }
+            
+            function updateUser()
+            {
+                var name = document.getElementById("fullName").value;
+                var dob = document.getElementById("dob").value;
+                var address = document.getElementById("Address").value;
+                var phoneNumber = document.getElementById("Phone").value;
+                var emailId = document.getElementById("Email").value;
+               
+                $.ajax({
+                    url: 'updateadmin',
+                    method: 'POST',
+                    data: {name: name, dob: dob, address: address,phoneNumber: phoneNumber, emailId: emailId},
+                    success: function (resultText) {
+                        $('#result1').html(resultText);
+                    },
+                    error: function (jqXHR, exception) {
+                        console.log('Error occured!!');
+                    }
+                });
+            }
+            function changePass()
+            {
+                var curpassword = document.getElementById("currentPassword").value;
+                var newpassword = document.getElementById("newPassword").value;
+                var renewpassword = document.getElementById("renewPassword").value;
+                var emailId = document.getElementById("EmailId").value;
+ 
+               
+                $.ajax({
+                    url: 'changeadminpassword',
+                    method: 'POST',
+                    data: {curpassword: curpassword,newpassword:newpassword, renewpassword:renewpassword,emailId: emailId},
+                    success: function (resultText) {
+                        $('#result2').html(resultText);
+                    },
+                    error: function (jqXHR, exception) {
+                        console.log('Error occured!!');
+                    }
+                });
+            }
+        </script>
     </head>
 
     <body>
@@ -91,12 +139,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="user-profile.jsp">
-                                    <i class="bi bi-gear"></i>
-                                    <span>Account Settings</span>
-                                </a>
-                            </li>
+                           
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -240,16 +283,16 @@
 
                                     </div>
 
-                                    <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                                   <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                                         <!-- Profile Edit Form -->
-                                        <form action="updateadmin" method="post">
+                                       
 
 
                                             <div class="row mb-3">
                                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="name" type="text" class="form-control" id="fullName" value="<s:property value="#session.name" />">
+                                                    <input name="name" type="text" class="form-control" id="fullName" value="<s:property value="#session.name" />" required>
                                                 </div>
                                             </div>
 
@@ -257,21 +300,22 @@
                                             <div class="row mb-3">
                                                 <label for="Country" class="col-md-4 col-lg-3 col-form-label">Date of Birth</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="dob" type="text" class="form-control" id="dob" value="<s:property value="#session.dob" />">
+                                               
+                                                    <input name="dob" type="date" class="form-control" id="dob" value="<s:property value="#session.dob" />" required>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
                                                 <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="address" type="text" class="form-control" id="Address" value="<s:property value="#session.address" />">
+                                                    <input name="address" type="text" class="form-control" id="Address" value="<s:property value="#session.address" />" required>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
                                                 <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="phoneNumber" type="text" class="form-control" id="Phone" value="<s:property value="#session.phoneNumber" />">
+                                                    <input name="phoneNumber" type="text" class="form-control" id="Phone" onkeypress ="return onlyNumberKey(event)" minlength="10" maxlength = "10" value='<s:property value="#session.phoneNumber" />' required>
                                                 </div>
                                             </div>
 
@@ -283,16 +327,11 @@
                                             </div>
 
                                             <div class="text-center">
-                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                <button type="submit" onclick="updateUser()" class="btn btn-primary">Save Changes</button>
                                             </div>
-
-                                            <s:if test="ctr>0">
-                                                <span style="color: red;"><s:property value="msg" /></span>
-                                            </s:if>
-                                            <s:else>
-                                                <span style="color: red;"><s:property value="msg" /></span>
-                                            </s:else>
-                                        </form><!-- End Profile Edit Form -->
+                                                <span id="result1"></span>
+                                           
+                                        <!-- End Profile Edit Form -->
 
                                     </div>
 
@@ -304,44 +343,40 @@
 
                                     <div class="tab-pane fade pt-3" id="profile-change-password">
                                         <!-- Change Password Form -->
-                                        <form action="changeadminpassword" method="post">
+                                    
 
                                             <div class="row mb-3">
                                                 <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="curpassword" type="password" class="form-control" id="currentPassword">
+                                                    <input name="curpassword" type="password" class="form-control" id="currentPassword" required>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
                                                 <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                                    <input name="newpassword" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}" class="form-control" id="newPassword" required>
+                                                     <div class="invalid-feedback">Password should be of 8 digits with combination of digits, special characters and symbols</div>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
                                                 <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                                    <input name="renewpassword" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}" class="form-control" id="renewPassword" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3" style="display:none;">
                                                 <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="emailId" type="email" class="form-control" value="<s:property value="#session.emailId" />" id="emailId">
+                                                    <input name="emailId" type="email" id="EmailId" class="form-control" value="<s:property value="#session.emailId" />" id="emailId">
                                                 </div>
                                             </div>
                                             <div class="text-center">
-                                                <button type="submit" class="btn btn-primary">Change Password</button>
+                                                <button type="submit"  onclick="changePass()" class="btn btn-primary">Change Password</button>
                                             </div>
-                                            <s:if test="ctr>0">
-                                                <span style="color: red;"><s:property value="msg" /></span>
-                                            </s:if>
-                                            <s:else>
-                                                <span style="color: red;"><s:property value="msg" /></span>
-                                            </s:else>
-                                        </form><!-- End Change Password Form -->
+                                           <span id="result2"></span>
+                                      <!-- End Change Password Form -->
 
                                     </div>
 

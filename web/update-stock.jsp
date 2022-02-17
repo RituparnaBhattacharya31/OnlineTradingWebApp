@@ -129,7 +129,7 @@
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
                                 <h6><s:property value="#session.name" /></h6>
-                                <span>Web Designer</span>
+                               
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -145,12 +145,7 @@
                                 <hr class="dropdown-divider">
                             </li>
 
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="admin-profile.jsp">
-                                    <i class="bi bi-gear"></i>
-                                    <span>Account Settings</span>
-                                </a>
-                            </li>
+                           
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

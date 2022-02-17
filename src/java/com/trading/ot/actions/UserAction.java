@@ -93,7 +93,31 @@ public class UserAction extends ActionSupport implements SessionAware {
         return "REGISTER";
 
     }
+    public String addUserSign()
+    {
+        String from = "ExaTrade1@gmail.com";
+        String password1 = "12we12we";
+        setAdmin(new Admin());
+        try{
+            String pass = getAdmin().generatePass();
+            setCtr(getAdmin().registerUserSign(getName(), getEmailId(), pass));
+            if (getCtr() > 0) {
+                setMsg("Password Sent Successfully!, kindly check your email.");
 
+                getAdmin().sendpass(from, password1,getEmailId(), "Password :", pass);
+
+            } else {
+
+                setMsg("Some error");
+                return "ERROR";
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "REGISTERSIGNUP";
+        
+    }
     public String checkValidUser() {
         //URL url;
         //URLConnection connection;

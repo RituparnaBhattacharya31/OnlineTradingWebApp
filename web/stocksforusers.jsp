@@ -34,7 +34,10 @@
                 console.log(sid);
                 console.log(stockName);
                 console.log(quantity);
+                if(quantity>0 && availability>=quantity && quantity!="")
+                {
                 $.ajax({
+                    
                     url: 'addtocart',
                     method: 'POST',
                     data: {userId: userId, stockId: sid, stockName: stockName, availability: availability, price: price, quantity: quantity},
@@ -44,10 +47,20 @@
                         $('#result2').html(msg);
 
                     },
+                
                     error: function (jqXHR, exception) {
                         console.log('Error occured!!');
                     }
                 });
+                
+                }
+                else
+                {
+                  
+                        var msg = 'Please enter valid quantity!';
+                        $('#result3').html(msg);
+                
+                 }
             }
 
         </script>
@@ -113,7 +126,7 @@
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
                                 <h6><s:property value="#session.name" /></h6>
-                                <span>Web Designer</span>
+                               
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -129,12 +142,7 @@
                                 <hr class="dropdown-divider">
                             </li>
 
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="user-profile.jsp">
-                                    <i class="bi bi-gear"></i>
-                                    <span>Account Settings</span>
-                                </a>
-                            </li>
+                           
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -231,7 +239,8 @@
 
                                     <h5 class="card-title">Stocks<span>  |  </span><span><a href="reportviewstock"> <button type="button" class="btn btn-outline-primary">Refresh</button></a></span></h5>
                                     <span id="result"></span>
-                                    <span style="color:red" id="result2"></span>
+                                    <span style="color:red" id="result3"></span>
+                                    <span style="color:red" id="result2"></span><br>
                                     <s:if test="noData==false">
 
 
@@ -260,7 +269,7 @@
                                                         <td><input type="text" name="stockName" id='stname_<s:property value="stockId" />' value="<s:property value="stockName" />"></td>
                                                         <td><input type="text" name="price" id='price_<s:property value="stockId" />' value="<s:property value="price" />"></td>
                                                         <td><input type="text" name="availability" id='avail_<s:property value="stockId" />' value="<s:property value="availability" />"></td>
-                                                        <td><input type="number" name="quantity" id='quan_<s:property value="stockId" />' ></td>
+                                                        <td><input type="number" name="quantity" id='quan_<s:property value="stockId" />' required></td>
                                                         <td>
                                                             <button type="submit" onclick="addToCart(<s:property value="stockId" />)" name="submit" class="btn btn-outline-primary">Wishlist</button>
 

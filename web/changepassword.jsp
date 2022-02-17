@@ -72,12 +72,12 @@
                                             </div>
                                             <div class="col-12">
                                                 <label for="newPassword" class="form-label">New Password</label>
-                                                <input type="password" name="newpassword" class="form-control" id="yourNewPassword" required>
+                                                <input type="password" name="newpassword" class="form-control" pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,16}" id="yourNewPassword" required>
                                                 <div class="invalid-feedback">Please enter your password!</div>
                                             </div>
                                             <div class="col-12">
                                                 <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                                <input type="password" name="confirmpassword" class="form-control" id="ConifrmPassword" required>
+                                                <input type="password" name="confirmpassword" class="form-control" pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,16}" id="ConifrmPassword" required>
                                                 <div class="invalid-feedback">Please retype your password!</div>
                                             </div>
 

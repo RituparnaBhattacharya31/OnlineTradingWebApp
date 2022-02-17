@@ -32,8 +32,14 @@
         <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
         <script>
+            function onlyNumberKey(evt) {
+                // Only ASCII character in that range allowed
+                var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+                if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                    return false;
+                return true;
+            }
 //            
             function updateUser()
             {
@@ -148,12 +154,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="user-profile.jsp">
-                                    <i class="bi bi-gear"></i>
-                                    <span>Account Settings</span>
-                                </a>
-                            </li>
+                            
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -312,7 +313,7 @@
                                             <div class="row mb-3">
                                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="name" type="text" class="form-control" id="fullName" value="<s:property value="#session.name" />">
+                                                    <input name="name" type="text" class="form-control" id="fullName" value="<s:property value="#session.name" />" required>
                                                 </div>
                                             </div>
 
@@ -321,21 +322,21 @@
                                                 <label for="Country" class="col-md-4 col-lg-3 col-form-label">Date of Birth</label>
                                                 <div class="col-md-8 col-lg-9">
                                                
-                                                    <input name="dob" type="date" class="form-control" id="dob" value="<s:property value="#session.dob" />">
+                                                    <input name="dob" type="date" class="form-control" id="dob" value="<s:property value="#session.dob" />" required>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
                                                 <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="address" type="text" class="form-control" id="Address" value="<s:property value="#session.address" />">
+                                                    <input name="address" type="text" class="form-control" id="Address" value="<s:property value="#session.address" />" required>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
                                                 <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="phoneNumber" type="text" class="form-control" id="Phone" value="<s:property value="#session.phoneNumber" />">
+                                                    <input name="phoneNumber" type="text" class="form-control" id="Phone" onkeypress ="return onlyNumberKey(event)" minlength="10" maxlength = "10" value='<s:property value="#session.phoneNumber" />' required>
                                                 </div>
                                             </div>
 
@@ -375,20 +376,21 @@
                                             <div class="row mb-3">
                                                 <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                                    <input name="newpassword" type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}" id="newPassword" required>
+                                                     <div class="invalid-feedback">Password should be of 8 digits with combination of digits, special characters and symbols</div>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
                                                 <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                                    <input name="renewpassword" type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}" id="renewPassword" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3" style="display:none;">
                                                 <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="emailId" type="email" id="EmailId" class="form-control" value="<s:property value="#session.emailId" />" id="emailId">
+                                                    <input name="emailId" type="email" id="EmailId" class="form-control" value="<s:property value="#session.emailId" />" id="emailId" required>
                                                 </div>
                                             </div>
                                             <div class="text-center">

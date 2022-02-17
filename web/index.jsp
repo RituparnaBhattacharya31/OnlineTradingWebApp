@@ -85,62 +85,75 @@
                 <h2 style="font-size: 40px;">OUR TEAM</h2>
             </div>
             <div class="row">
+                
                 <div class="col-md-4">
                     <div class="card special-skill-item border-0">
                         <div class="card-header bg-transparent border-0"><img src="assets1/img/aditya.jpg" style="width: 180px;height: 200px;"></div>
                         <div class="card-body">
-                            <h3 class="card-title" style="font-size: 20px;">Aditya Joarder</h3>
+                           <a href="https://www.linkedin.com/in/aditya-joarder-76658aa9"> <h3 class="card-title" style="font-size: 20px;">Aditya Joarder</h3></a>
                             <p>Digital Intern</p>
                         </div>
                     </div>
                 </div>
+                
+                
                 <div class="col-md-4">
                     <div class="card special-skill-item border-0">
                         <div class="card-header bg-transparent border-0"><img src="assets1/img/ritu.png" style="width: 180px;height: 200px;"></div>
                         <div class="card-body">
-                            <h3 class="card-title" style="font-size: 20px;">Rituparna Bhattacharya</h3>
+                          <a href="https://www.linkedin.com/in/rituparna-bhattacharya-144545190/">   <h3 class="card-title" style="font-size: 20px;">Rituparna Bhattacharya</h3> </a>
                             <p>Digital Intern</p>
                         </div>
                     </div>
                 </div>
+                     
+                
+               
                 <div class="col-md-4">
                     <div class="card special-skill-item border-0">
                         <div class="card-header bg-transparent border-0"><img src="assets1/img/abhineet%20(2).jpg" style="width: 180px;height: 200px;"></div>
                         <div class="card-body">
-                            <h3 class="card-title" style="font-size: 20px;">Abhineet Mishra</h3>
+                         <a href="https://www.linkedin.com/in/abhineet64">     <h3 class="card-title" style="font-size: 20px;">Abhineet Mishra</h3>   </a>
                             <p>Digital Intern<br></p>
                         </div>
                     </div>
                 </div>
+              
             </div>
             <div class="row">
+              
                 <div class="col-md-4">
                     <div class="card special-skill-item border-0">
                         <div class="card-header bg-transparent border-0"><img src="assets1/img/Jaydeep.jpg" style="width: 180px;height: 200px;"></div>
                         <div class="card-body">
-                            <h3 class="card-title" style="font-size: 20px;">Jaydeep Das</h3>
+                            <a href="https://www.linkedin.com/in/jaydeep-das-773756194">   <h3 class="card-title" style="font-size: 20px;">Jaydeep Das</h3>  </a>
                             <p>Digital Intern<br></p>
                         </div>
                     </div>
                 </div>
+               
+                
                 <div class="col-md-4">
                     <div class="card special-skill-item border-0">
                         <div class="card-header bg-transparent border-0"><img src="assets1/img/suraj.jpg" style="width: 180px;height: 200px;"></div>
                         <div class="card-body">
-                            <h3 class="card-title" style="font-size: 20px;">Suraj Kumar</h3>
+                        <a href="https://www.linkedin.com/in/suraj-kumar-7076a4194">     <h3 class="card-title" style="font-size: 20px;">Suraj Kumar</h3>  </a>
                             <p>Digital Intern<br></p>
                         </div>
                     </div>
                 </div>
+               
+                
                 <div class="col-md-4">
                     <div class="card special-skill-item border-0">
                         <div class="card-header bg-transparent border-0"><img src="assets1/img/rajshekhar.jpg" style="width: 180px;height: 200px;"></div>
                         <div class="card-body">
-                            <h3 class="card-title" style="font-size: 20px;"><strong>Gullapalli Rajshekhar</strong><br></h3>
+                          <a href="https://www.linkedin.com/in/rajasekhar-gullapalli-7273a1207">   <h3 class="card-title" style="font-size: 20px;"><strong>Gullapalli Rajshekhar</strong><br></h3>  </a>
                             <p>Digital Intern<br></p>
                         </div>
                     </div>
                 </div>
+               
             </div>
         </div>
     </section>

@@ -10,7 +10,11 @@
             <result name="REGISTER">/pages-login.jsp</result>
             <result name="ERROR">/pages-register.jsp</result>
         </action>
-        
+         <action name="registerusersignup" class="com.trading.ot.actions.UserAction" method="addUserSign">
+            <result name="REGISTERSIGNUP">/sendPass.jsp</result>
+       
+            <result name="ERROR">/pages-register.jsp</result>
+        </action>
         <action name="loginuser" class="com.trading.ot.actions.UserAction" method="checkValidUser">
             <result name="USER">/user-dashboard.jsp</result>
             <result name="ADMINUSER">/admin-dashboard.jsp</result>
@@ -97,7 +101,7 @@
         
         <action name="updateadmin" class="com.trading.ot.actions.UserAction" method="updateUser">
              <result name="LOGOUT1">/logout.jsp</result>
-            <result name="UPDATEUSER">/admin-profile.jsp</result>
+            <result name="UPDATEUSER">/success-updateuser.jsp</result>
         </action>
         
            <action name="buystock" class="com.trading.ot.actions.StockAction" method="buyStock">
@@ -120,7 +124,7 @@
         
         <action name="changeadminpassword" class="com.trading.ot.actions.UserAction" method="updateUserPassword">
              <result name="LOGOUT1">/logout.jsp</result>
-            <result name="UPDATEUSERPASSWORD">/admin-profile.jsp</result>
+            <result name="UPDATEUSERPASSWORD">/success-updateuser.jsp</result>
         </action>
         
          <action name="showwishlist" class="com.trading.ot.actions.StockAction" method="wishList">

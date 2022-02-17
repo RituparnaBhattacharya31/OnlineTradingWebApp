@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -414,7 +415,26 @@ public class Admin {
         String generatedOTP = new String(otp);
         return generatedOTP;
     }
+ public String generatePass() {
+        String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+        String specialCharacters = "!@#$";
+        String numbers = "1234567890";
+        String combinedChars = capitalCaseLetters + lowerCaseLetters + specialCharacters + numbers;
+        Random random = new Random();
+        char[] password = new char[16];
 
+        password[0] = lowerCaseLetters.charAt(random.nextInt(lowerCaseLetters.length()));
+        password[1] = capitalCaseLetters.charAt(random.nextInt(capitalCaseLetters.length()));
+        password[2] = specialCharacters.charAt(random.nextInt(specialCharacters.length()));
+        password[3] = numbers.charAt(random.nextInt(numbers.length()));
+
+        for(int i = 4; i< 16 ; i++) {
+           password[i] = combinedChars.charAt(random.nextInt(combinedChars.length()));
+        }
+        String pass=String.valueOf(password);
+        return pass;
+    }
     public int addToCart(int userId, int stockId, int availability, int quantity, double totalPrice) throws SQLException {
         int i = 0;
         Connection con = null;
@@ -888,4 +908,63 @@ public class Admin {
 
     }
 
+    public int registerUserSign(String name, String emailId, String pass)throws Exception {
+        int i = 0;
+        Connection con = null;
+        try {
+            con = ConnectionManager.getConnection();
+            String sql = "INSERT INTO trading.user(name,emailId,phoneNumber,dob,password,address,status) VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ps.setString(1, name);
+            ps.setString(2, emailId);
+            ps.setString(3, "0");
+            ps.setString(4, "0");
+            ps.setString(5, pass);
+            ps.setString(6, "0");
+            ps.setInt(7, 0);
+            System.out.println("SQL for insert=" + ps);
+            i = ps.executeUpdate();
+            return i;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return i;
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+     public static void sendpass(String from, String password, String to, String sub, String msg) {
+        //Get properties object    
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        //get Session   
+        Session session = Session.getDefaultInstance(props,
+                new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        });
+        //compose message    
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject(sub);
+            message.setText(msg);
+            //send message  
+            Transport.send(message);
+            System.out.println("Password sent successfully");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
