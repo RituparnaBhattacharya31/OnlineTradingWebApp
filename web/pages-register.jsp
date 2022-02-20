@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@taglib prefix="s" uri="/struts-tags"%>
-
+<%
+    response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+    response.setDateHeader("Expires", 0);
+%>
 <html lang="en">
 
     <head>
@@ -62,7 +66,7 @@
                                         <span class="d-none d-lg-block">Exa-Trade</span>
                                     </a>
                                 </div><!-- End Logo -->
-                                <div class="g-signin2" id="gbutton" data-onsuccess="onSignIn"></div><br>
+                                <div class="g-signin2" id="gbutton" onclick="buttonclicked()" data-onsuccess="onSignIn"></div><br>
                                 
                                 <span style="color:red; font-size:18px;" id="result"></span>
 <!--                                 <a href="#" onclick="signOut();">Sign out</a>-->

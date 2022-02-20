@@ -3,8 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var clicked=false;
+function buttonclicked()
+{
+    clicked=true;
+}
 function onSignIn(googleUser){
-            var profile = googleUser.getBasicProfile();
+    if(clicked==true)
+    {
+        var profile = googleUser.getBasicProfile();
             var name = profile.getName();
             var emailId = profile.getEmail();
             console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -26,4 +33,6 @@ function onSignIn(googleUser){
                         console.log('Error occured!!');
                     }
             });  
+    }
+            
 }
