@@ -231,6 +231,7 @@ public class Admin {
 //            }
 //            encryptedpass = s.toString();
 //            String encryptedpass=BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+
             ps.setString(1, name);
             ps.setString(2, emailId);
             ps.setString(3, phoneNumber);
