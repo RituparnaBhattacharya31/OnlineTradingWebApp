@@ -217,24 +217,25 @@ public class Admin {
             String sql = "INSERT INTO trading.user(name,emailId,phoneNumber,dob,password,address,status) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             /* MessageDigest instance for MD5. */
-            MessageDigest m = MessageDigest.getInstance("MD5");
-            /* Add plain-text password bytes to digest using MD5 update() method. */ 
-            m.update(password.getBytes());
-            
-            byte[] bytes = m.digest();  
-              
-            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
-            StringBuilder s = new StringBuilder();  
-            for(int j=0; j< bytes.length ;j++)  
-            {  
-                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));  
-            }
-            encryptedpass = s.toString();
+//            MessageDigest m = MessageDigest.getInstance("MD5");
+//            /* Add plain-text password bytes to digest using MD5 update() method. */ 
+//            m.update(password.getBytes());
+//            
+//            byte[] bytes = m.digest();  
+//              
+//            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+//            StringBuilder s = new StringBuilder();  
+//            for(int j=0; j< bytes.length ;j++)  
+//            {  
+//                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));  
+//            }
+//            encryptedpass = s.toString();
+//            String encryptedpass=BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
             ps.setString(1, name);
             ps.setString(2, emailId);
             ps.setString(3, phoneNumber);
             ps.setString(4, dob);
-            ps.setString(5, encryptedpass);
+            ps.setString(5, password);
             ps.setString(6, address);
             ps.setInt(7, 0);
             System.out.println("SQL for insert=" + ps);
@@ -322,6 +323,7 @@ public class Admin {
             System.out.println("Got the connection.........................." + con);
             PreparedStatement ps = con.prepareStatement(sql);
             System.out.println("emailId = " + emailId);
+            
             ps.setString(1, emailId);
             ps.setString(2, password);
             System.out.println("Select SQL = " + ps);
