@@ -43,10 +43,24 @@ public class Admin {
 
         Connection con = ConnectionManager.getConnection();
         ResultSet rs = null;
+        String encryptedpass =null;
         User user = new User();
         int i = 0;
         try {
-
+            /* MessageDigest instance for MD5. */
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            /* Add plain-text password bytes to digest using MD5 update() method. */ 
+            m.update(newpassword.getBytes());
+            
+           byte[] bytes = m.digest();  
+             
+           /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+           StringBuilder s = new StringBuilder();  
+           for(int j=0; j< bytes.length ;j++)  
+           {  
+               s.append(Integer.toString((bytes[j] & 0xff) + 0x100, 16).substring(1));  
+           }
+           encryptedpass = s.toString();
             String sql1 = "SELECT * FROM user WHERE emailId=?";
             PreparedStatement ps1 = con.prepareStatement(sql1);
             ps1.setString(1, emailId);
@@ -57,7 +71,7 @@ public class Admin {
                     String sql = "UPDATE user SET password = ?"
                             + "WHERE emailId = ?";
                     PreparedStatement ps = con.prepareStatement(sql);
-                    ps.setString(1, newpassword);
+                    ps.setString(1, encryptedpass);
                     ps.setString(2, emailId);
                     System.out.println("Select SQL = " + ps);
                     i = ps.executeUpdate();
@@ -217,26 +231,26 @@ public class Admin {
             String sql = "INSERT INTO trading.user(name,emailId,phoneNumber,dob,password,address,status) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             /* MessageDigest instance for MD5. */
-//            MessageDigest m = MessageDigest.getInstance("MD5");
-//            /* Add plain-text password bytes to digest using MD5 update() method. */ 
-//            m.update(password.getBytes());
-//            
-//            byte[] bytes = m.digest();  
-//              
-//            /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
-//            StringBuilder s = new StringBuilder();  
-//            for(int j=0; j< bytes.length ;j++)  
-//            {  
-//                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));  
-//            }
-//            encryptedpass = s.toString();
-//            String encryptedpass=BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            /* Add plain-text password bytes to digest using MD5 update() method. */ 
+            m.update(password.getBytes());
+            
+           byte[] bytes = m.digest();  
+             
+           /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+           StringBuilder s = new StringBuilder();  
+           for(int j=0; j< bytes.length ;j++)  
+           {  
+               s.append(Integer.toString((bytes[j] & 0xff) + 0x100, 16).substring(1));  
+           }
+           encryptedpass = s.toString();
+
 
             ps.setString(1, name);
             ps.setString(2, emailId);
             ps.setString(3, phoneNumber);
             ps.setString(4, dob);
-            ps.setString(5, password);
+            ps.setString(5, encryptedpass);
             ps.setString(6, address);
             ps.setInt(7, 0);
             System.out.println("SQL for insert=" + ps);
@@ -278,6 +292,7 @@ public class Admin {
 
         Connection con = ConnectionManager.getConnection();
         ResultSet rs = null;
+        String encryptedpass=null;
         User user = new User();
         int i = 0;
         try {
@@ -286,13 +301,27 @@ public class Admin {
             PreparedStatement ps1 = con.prepareStatement(sql1);
             ps1.setString(1, emailId);
             rs = ps1.executeQuery();
+            /* MessageDigest instance for MD5. */
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            /* Add plain-text password bytes to digest using MD5 update() method. */ 
+            m.update(newpassword.getBytes());
+            
+           byte[] bytes = m.digest();  
+             
+           /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+           StringBuilder s = new StringBuilder();  
+           for(int j=0; j< bytes.length ;j++)  
+           {  
+               s.append(Integer.toString((bytes[j] & 0xff) + 0x100, 16).substring(1));  
+           }
+           encryptedpass = s.toString();
             if (rs.next()) {
                 String notp = rs.getString("otp");
                 if (notp.equals(newotp) && newpassword.equals(confirmpassword)) {
                     String sql = "UPDATE user SET password = ?"
                             + "WHERE emailId = ?";
                     PreparedStatement ps = con.prepareStatement(sql);
-                    ps.setString(1, newpassword);
+                    ps.setString(1, encryptedpass);
                     ps.setString(2, emailId);
                     System.out.println("Select SQL = " + ps);
                     i = ps.executeUpdate();
@@ -318,15 +347,28 @@ public class Admin {
         User user = new User();
         Connection con = null;
         boolean valid = true;
+        String encryptedpass=null;
         try {
             con = ConnectionManager.getConnection();
             String sql = "SELECT * FROM user WHERE emailId=? and password=?";
             System.out.println("Got the connection.........................." + con);
             PreparedStatement ps = con.prepareStatement(sql);
             System.out.println("emailId = " + emailId);
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            /* Add plain-text password bytes to digest using MD5 update() method. */ 
+            m.update(password.getBytes());
             
+           byte[] bytes = m.digest();  
+             
+           /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+           StringBuilder s = new StringBuilder();  
+           for(int j=0; j< bytes.length ;j++)  
+           {  
+               s.append(Integer.toString((bytes[j] & 0xff) + 0x100, 16).substring(1));  
+           }
+           encryptedpass = s.toString();
             ps.setString(1, emailId);
-            ps.setString(2, password);
+            ps.setString(2, encryptedpass);
             System.out.println("Select SQL = " + ps);
 
             rs = ps.executeQuery();
