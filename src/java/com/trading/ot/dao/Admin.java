@@ -989,17 +989,32 @@ public class Admin {
 
     public int registerUserSign(String name, String emailId, String pass)throws Exception {
         int i = 0;
+        String encryptedpass=null; 
         Connection con = null;
         try {
             con = ConnectionManager.getConnection();
             String sql = "INSERT INTO trading.user(name,emailId,phoneNumber,dob,password,address,status) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
+            /* MessageDigest instance for MD5. */
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            /* Add plain-text password bytes to digest using MD5 update() method. */ 
+            m.update(pass.getBytes());
             
+           byte[] bytes = m.digest();  
+             
+           /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+           StringBuilder s = new StringBuilder();  
+           for(int j=0; j< bytes.length ;j++)  
+           {  
+               s.append(Integer.toString((bytes[j] & 0xff) + 0x100, 16).substring(1));  
+           }
+           encryptedpass = s.toString();
+
             ps.setString(1, name);
             ps.setString(2, emailId);
             ps.setString(3, "0");
             ps.setString(4, "0");
-            ps.setString(5, pass);
+            ps.setString(5, encryptedpass);
             ps.setString(6, "0");
             ps.setInt(7, 0);
             System.out.println("SQL for insert=" + ps);
