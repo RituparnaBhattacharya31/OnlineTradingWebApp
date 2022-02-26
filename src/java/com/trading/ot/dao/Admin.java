@@ -43,7 +43,9 @@ public class Admin {
 
         Connection con = ConnectionManager.getConnection();
         ResultSet rs = null;
+        String encryptedcurpass =null;
         String encryptedpass =null;
+        String curencryptedpass=null;
         User user = new User();
         int i = 0;
         try {
@@ -61,13 +63,29 @@ public class Admin {
                s.append(Integer.toString((bytes[j] & 0xff) + 0x100, 16).substring(1));  
            }
            encryptedpass = s.toString();
+
+            /* MessageDigest instance for MD5. */
+            MessageDigest m2 = MessageDigest.getInstance("MD5");
+            /* Add plain-text password bytes to digest using MD5 update() method. */ 
+            m2.update(curpassword.getBytes());
+            
+           byte[] bytes2 = m2.digest();  
+             
+           /* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+           StringBuilder s2 = new StringBuilder();  
+           for(int b=0; b< bytes2.length ;b++)  
+           {  
+               s2.append(Integer.toString((bytes2[b] & 0xff) + 0x100, 16).substring(1));  
+           }
+           encryptedcurpass = s2.toString();
             String sql1 = "SELECT * FROM user WHERE emailId=?";
             PreparedStatement ps1 = con.prepareStatement(sql1);
             ps1.setString(1, emailId);
             rs = ps1.executeQuery();
             if (rs.next()) {
                 String npassword = rs.getString("password");
-                if (npassword.equals(curpassword) && newpassword.equals(renewpassword)) {
+                
+                if (npassword.equals(encryptedcurpass) && newpassword.equals(renewpassword)) {
                     String sql = "UPDATE user SET password = ?"
                             + "WHERE emailId = ?";
                     PreparedStatement ps = con.prepareStatement(sql);
