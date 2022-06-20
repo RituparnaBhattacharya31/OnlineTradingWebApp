@@ -28,7 +28,7 @@
         <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
         <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
         <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
     </head>
@@ -46,12 +46,12 @@
                 <i class="bi bi-list toggle-sidebar-btn"></i>
             </div><!-- End Logo -->
 
-            <div class="search-bar">
+<!--            <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="#">
                     <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
-            </div><!-- End Search Bar -->
+            </div> End Search Bar -->
 
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
@@ -211,7 +211,7 @@
                                             <i class="fa fa-inr"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6><i class="fa fa-inr"></i><s:property value="#session.revenue" /></h6>
+                                            <h6><s:property value="#session.revenue" /></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -243,7 +243,7 @@
                         </div>
 
                         <!-- Reports -->
-                         <div class="col-12">
+<!--                         <div class="col-12">
               <div class="card">
 
                 <div class="filter">
@@ -262,7 +262,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Reports <span>/Today</span></h5>
 
-                  <!-- Line Chart -->
+                   Line Chart 
                   <div id="reportsChart"></div>
 
                   <script>
@@ -317,12 +317,12 @@
                       }).render();
                     });
                   </script>
-                  <!-- End Line Chart -->
+                   End Line Chart 
 
                 </div>
 
               </div>
-            </div><!-- End Reports -->
+            </div> End Reports -->
 
                         <!-- Recent Sales -->
                         <div class="col-12">

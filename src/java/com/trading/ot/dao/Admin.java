@@ -494,52 +494,52 @@ public class Admin {
         String generatedOTP = new String(otp);
         return generatedOTP;
     }
- public String generatePass() {
-        String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
-        String specialCharacters = "!@#$";
-        String numbers = "1234567890";
-        String combinedChars = capitalCaseLetters + lowerCaseLetters + specialCharacters + numbers;
-        Random random = new Random();
-        char[] password = new char[16];
+    public String generatePass() {
+           String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+           String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+           String specialCharacters = "!@#$";
+           String numbers = "1234567890";
+           String combinedChars = capitalCaseLetters + lowerCaseLetters + specialCharacters + numbers;
+           Random random = new Random();
+           char[] password = new char[16];
 
-        password[0] = lowerCaseLetters.charAt(random.nextInt(lowerCaseLetters.length()));
-        password[1] = capitalCaseLetters.charAt(random.nextInt(capitalCaseLetters.length()));
-        password[2] = specialCharacters.charAt(random.nextInt(specialCharacters.length()));
-        password[3] = numbers.charAt(random.nextInt(numbers.length()));
+           password[0] = lowerCaseLetters.charAt(random.nextInt(lowerCaseLetters.length()));
+           password[1] = capitalCaseLetters.charAt(random.nextInt(capitalCaseLetters.length()));
+           password[2] = specialCharacters.charAt(random.nextInt(specialCharacters.length()));
+           password[3] = numbers.charAt(random.nextInt(numbers.length()));
 
-        for(int i = 4; i< 16 ; i++) {
-           password[i] = combinedChars.charAt(random.nextInt(combinedChars.length()));
-        }
-        String pass=String.valueOf(password);
-        return pass;
-    }
-    public int addToCart(int userId, int stockId, int availability, int quantity, double totalPrice) throws SQLException {
-        int i = 0;
-        Connection con = null;
+           for(int i = 4; i< 16 ; i++) {
+              password[i] = combinedChars.charAt(random.nextInt(combinedChars.length()));
+           }
+           String pass=String.valueOf(password);
+           return pass;
+       }
+        public int addToCart(int userId, int stockId, int availability, int quantity, double totalPrice) throws SQLException {
+            int i = 0;
+            Connection con = null;
 
-        try {
-            con = ConnectionManager.getConnection();
-            String sql = "INSERT INTO trading.wishlist(userId,stockId,availability,quantity,totalPrice) VALUES (?,?,?,?,?)";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, userId);
-            ps.setInt(2, stockId);
-            ps.setInt(3, availability);
-            ps.setInt(4, quantity);
-            ps.setDouble(5, totalPrice);
+            try {
+                con = ConnectionManager.getConnection();
+                String sql = "INSERT INTO trading.wishlist(userId,stockId,availability,quantity,totalPrice) VALUES (?,?,?,?,?)";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setInt(1, userId);
+                ps.setInt(2, stockId);
+                ps.setInt(3, availability);
+                ps.setInt(4, quantity);
+                ps.setDouble(5, totalPrice);
 
-            System.out.println("SQL for insert=" + ps);
-            i = ps.executeUpdate();
-            return i;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return i;
-        } finally {
-            if (con != null) {
-                con.close();
+                System.out.println("SQL for insert=" + ps);
+                i = ps.executeUpdate();
+                return i;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return i;
+            } finally {
+                if (con != null) {
+                    con.close();
+                }
             }
         }
-    }
 
     public int buyStock(int id, int stockId, int availability, int quanity, int userId, double totalPrice) throws SQLException, Exception {
         int i = 0;
@@ -648,8 +648,8 @@ public class Admin {
 
                 }
                 return i;
-            } else {
-                String sql = "UPDATE stockordered SET quantityOrdered=?, totalPrice=? WHERE orderId=?";
+            } else{
+                String sql = "UPDATE stockordered SET quantityOrdered=?, totalPrice=? WHERE orderId=? and stockId=?";
                 PreparedStatement ps = con.prepareStatement(sql);
                 int quanord = quantityOrdered - sellQuantity;
                 System.out.println(quanord);
@@ -657,6 +657,7 @@ public class Admin {
                 ps.setInt(1, quanord);
                 ps.setDouble(2, tprice);
                 ps.setInt(3, orderId);
+                ps.setInt(4, stockId);
                 int j = ps.executeUpdate();
                 System.out.println("SQL for insert=" + ps);
                 if (j > 0) {
@@ -923,7 +924,7 @@ public class Admin {
         ResultSet rs = null;
         Connection con = ConnectionManager.getConnection();
         try {
-            String sql = "SELECT DISTINCT userId FROM stockordered ";
+            String sql = "SELECT * from user";
             PreparedStatement ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {

@@ -23,6 +23,16 @@
 
         <script>
 //            
+            $(document).ready(function() {
+              $("#alert").hide(); 
+              $('#alertwrong').hide();
+              $("#close").click(function () {
+                  $('#alert').hide();
+             });
+             $("#closewrong").click(function () {
+                  $('#alertwrong').hide();
+             });
+             });
             function addToCart(sid)
             {
                 var userId = document.getElementById("userId").value;
@@ -30,11 +40,8 @@
                 var availability = document.getElementById("avail_" + sid).value;
                 var price = document.getElementById("price_" + sid).value;
                 var quantity = document.getElementById("quan_" + sid).value;
-                console.log(userId);
-                console.log(sid);
-                console.log(stockName);
-                console.log(quantity);
-                if(quantity>0 && availability>=quantity && quantity!="")
+                //var avail=parseInt(availability) - parseInt(quantity);
+                if(parseInt(quantity)>0 && parseInt(quantity)<=parseInt(availability))
                 {
                 $.ajax({
                     
@@ -43,8 +50,11 @@
                     data: {userId: userId, stockId: sid, stockName: stockName, availability: availability, price: price, quantity: quantity},
                     success: function (resultText) {
                         $('#result').html(resultText);
-                        var msg = 'The stock has successfully added to cart';
-                        $('#result2').html(msg);
+                        //var msg = 'The stock has successfully added to cart';
+                        //$('#result2').html(msg);
+                        //$('#avail_'+sid).val(avail.toString());
+                        $('#alert').show();
+                        $('#alertwrong').hide();
 
                     },
                 
@@ -57,8 +67,10 @@
                 else
                 {
                   
-                        var msg = 'Please enter valid quantity!';
-                        $('#result3').html(msg);
+                        //var msg = 'Please enter valid quantity!';
+                        //$('#result3').html(msg);
+                        $('#alertwrong').show();
+                        $('#alert').hide();
                 
                  }
             }
@@ -92,12 +104,12 @@
                 <i class="bi bi-list toggle-sidebar-btn"></i>
             </div><!-- End Logo -->
 
-            <div class="search-bar">
+<!--            <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="#">
                     <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
-            </div><!-- End Search Bar -->
+            </div> End Search Bar -->
 
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
@@ -239,8 +251,22 @@
 
                                     <h5 class="card-title">Stocks<span>  |  </span><span><a href="reportviewstock"> <button type="button" class="btn btn-outline-primary">Refresh</button></a></span></h5>
                                     <span id="result"></span>
-                                    <span style="color:red" id="result3"></span>
-                                    <span style="color:red" id="result2"></span><br>
+<!--                                    <span style="color:red" id="result3"></span>
+                                    <span style="color:red" id="result2"></span><br>-->
+                                    
+                                    <div id="alert" class="alert alert-success fade show alert-dismissible" role="alert">
+                                <strong>Stock added to wishlist Successfully!</strong>
+                                        <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+        <!--                        <span id="result"></span>-->
+                                <div id="alertwrong" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Quantity should be > 1 and < = availability !
+                                    <button type="button" class="close" id="closewrong" data-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
                                     <s:if test="noData==false">
 
 

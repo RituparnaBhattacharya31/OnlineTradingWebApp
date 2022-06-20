@@ -33,6 +33,11 @@
         <link href="assets/css/style.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
+//             $("#profile-edit").load(function() {
+//              $("#alert").hide(); 
+//              $("#close").click(function () {
+//                  $('#alert').hide();
+//             });
             function onlyNumberKey(evt) {
                 // Only ASCII character in that range allowed
                 var ASCIICode = (evt.which) ? evt.which : evt.keyCode
@@ -55,6 +60,18 @@
                     data: {name: name, dob: dob, address: address,phoneNumber: phoneNumber, emailId: emailId},
                     success: function (resultText) {
                         $('#result1').html(resultText);
+                        //$("#alert").show();
+                        $('#fullName').val(name);
+                        $('#dob').val(dob);
+                        $('#Address').val(address);
+                        $('#Phone').val(phoneNumber);
+                        $('#Email').val(emailId);
+        
+                        $('#pfname').html(name);
+                        $('#pdob').html(dob);
+                        $('#pAddress').html(address);
+                        $('#pPhone').html(phoneNumber);
+                        $('#pEmail').html(emailId);
                     },
                     error: function (jqXHR, exception) {
                         console.log('Error occured!!');
@@ -98,12 +115,12 @@
                 <i class="bi bi-list toggle-sidebar-btn"></i>
             </div><!-- End Logo -->
 
-            <div class="search-bar">
+<!--            <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="#">
                     <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
-            </div><!-- End Search Bar -->
+            </div> End Search Bar -->
 
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
@@ -250,7 +267,7 @@
 
                     </div>
 
-                    <div class="col-xl-8">
+                    <div class="col-xl-8" id="udetails">
 
                         <div class="card">
                             <div class="card-body pt-3">
@@ -279,27 +296,27 @@
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                            <div class="col-lg-9 col-md-8"><s:property value="#session.name" /></div>
+                                            <div class="col-lg-9 col-md-8" id="pfname"><s:property value="#session.name" /></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label">Address</div>
-                                            <div class="col-lg-9 col-md-8"><s:property value="#session.address" /></div>
+                                            <div class="col-lg-9 col-md-8" id="pAddress"><s:property value="#session.address" /></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label">Date of Birth</div>
-                                            <div class="col-lg-9 col-md-8"><s:property value="#session.dob" /></div>
+                                            <div class="col-lg-9 col-md-8" id="pdob"><s:property value="#session.dob" /></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label">Phone</div>
-                                            <div class="col-lg-9 col-md-8"><s:property value="#session.phoneNumber" /></div>
+                                            <div class="col-lg-9 col-md-8" id="pPhone"><s:property value="#session.phoneNumber" /></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label">Email</div>
-                                            <div class="col-lg-9 col-md-8"><s:property value="#session.emailId" /></div>
+                                            <div class="col-lg-9 col-md-8" id="pEmail"><s:property value="#session.emailId" /></div>
                                         </div>
 
                                     </div>
@@ -351,6 +368,12 @@
                                                 <button type="submit" onclick="updateUser()" class="btn btn-primary">Save Changes</button>
                                             </div>
                                                 <span id="result1"></span>
+<!--                                                 <div id="alert" class="alert alert-success fade show alert-dismissible" role="alert">
+                                                    <strong>Profile updated Successfully!</strong>
+                                                    <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                            </div>-->
                                            
                                         <!-- End Profile Edit Form -->
 

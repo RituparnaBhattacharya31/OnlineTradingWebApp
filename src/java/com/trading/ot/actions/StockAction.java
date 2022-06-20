@@ -23,7 +23,7 @@ import org.apache.struts2.interceptor.SessionAware;
  *
  * @author adity
  */
-public class StockAction extends ActionSupport implements SessionAware{
+public class StockAction extends ActionSupport implements SessionAware {
 
     /**
      * @return the sellQuantity
@@ -84,16 +84,14 @@ public class StockAction extends ActionSupport implements SessionAware{
     /**
      * @return the wishList
      */
-  
-
     private static long serialVersionUID = 4821216272008282533L;
     private SessionMap<String, Object> sessionMap;
+
     @Override
     public void setSession(Map<String, Object> map) {
         setSessionMap((SessionMap<String, Object>) (SessionMap) map);
     }
-    
-    
+
     private ResultSet rs = null;
     private Stocks product = null;
     private List<Stocks> stockList = null;
@@ -102,7 +100,7 @@ public class StockAction extends ActionSupport implements SessionAware{
     private Admin admin = new Admin();
     private boolean noData = false;
     private String submitType;
-    
+
     private int userId;
     private int id;
 
@@ -128,70 +126,67 @@ public class StockAction extends ActionSupport implements SessionAware{
             return "LOGOUT1";
         } else {
             try {
-            setStockList(new ArrayList<>());
-            setStockList(getAdmin().reportStock());
+                setStockList(new ArrayList<>());
+                setStockList(getAdmin().reportStock());
 
-            if (!stockList.isEmpty()) {
-                setNoData(false);
-                System.out.println("Stocks retrieve = " + getStockList().size());
-                System.out.println("setting nodata=false");
-            } else {
-                setNoData(true);
+                if (!stockList.isEmpty()) {
+                    setNoData(false);
+                    System.out.println("Stocks retrieve = " + getStockList().size());
+                    System.out.println("setting nodata=false");
+                } else {
+                    setNoData(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "REPORTSTOCK";
+            return "REPORTSTOCK";
         }
 
-        
     }
-public String StockInfo()
-    {
+
+    public String StockInfo() {
         Admin dao = new Admin();
-        HttpSession session = ServletActionContext.getRequest().getSession(false);
-        if (session == null || session.getAttribute("login") == null) {
-            return "LOGOUT1";
-        } else 
-        {
-           try {
-            int j=dao.countPurchase();
-            int i=dao.countBuyer();
-            double r=dao.calRevenue();
-            session.setAttribute("orders", j);
-            session.setAttribute("buyers", i);
-            session.setAttribute("revenue", r);
-            } 
-           catch (Exception e) {
-            e.printStackTrace();
-          }
-        }
-        return "REPORTINFO";
-    }
-    public String StockUpdateAction() {
-        
         HttpSession session = ServletActionContext.getRequest().getSession(false);
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
         } else {
             try {
-            setStockList(new ArrayList<>());
-            setStockList(getAdmin().reportStock());
-
-            if (!stockList.isEmpty()) {
-                setNoData(false);
-                System.out.println("Stocks retrieve = " + getStockList().size());
-                System.out.println("setting nodata=false");
-            } else {
-                setNoData(true);
+                int j = dao.countPurchase();
+                int i = dao.countBuyer();
+                double r = dao.calRevenue();
+                session.setAttribute("orders", j);
+                session.setAttribute("buyers", i);
+                session.setAttribute("revenue", r);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return "REPORTSTOCK";
+        return "REPORTINFO";
+    }
+
+    public String StockUpdateAction() {
+
+        HttpSession session = ServletActionContext.getRequest().getSession(false);
+        if (session == null || session.getAttribute("login") == null) {
+            return "LOGOUT1";
+        } else {
+            try {
+                setStockList(new ArrayList<>());
+                setStockList(getAdmin().reportStock());
+
+                if (!stockList.isEmpty()) {
+                    setNoData(false);
+                    System.out.println("Stocks retrieve = " + getStockList().size());
+                    System.out.println("setting nodata=false");
+                } else {
+                    setNoData(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "REPORTSTOCK";
         }
 
-        
     }
 
     public String updateStock() {
@@ -200,48 +195,46 @@ public String StockInfo()
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
         } else {
-             try {
-            int i = dao.updateStockDetails(getStockId(), getStockName(), getPrice(), getAvailability());
-            if (i > 0) {
-                setMsg("Stocks updated successfully");
-            } else {
-                setMsg("error");
+            try {
+                int i = dao.updateStockDetails(getStockId(), getStockName(), getPrice(), getAvailability());
+                if (i > 0) {
+                    setMsg("Stocks updated successfully");
+                } else {
+                    setMsg("error");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            return "UPDATESTOCK";
         }
 
-        return "UPDATESTOCK";
-        }
-       
     }
 
-    public String wishList()
-    {
+    public String wishList() {
         Admin dao = new Admin();
         HttpSession session = ServletActionContext.getRequest().getSession(false);
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
-        } else 
-        {
-           try {
-            setWishList(new ArrayList<>());
-            setWishList(dao.wishList(getUserId()));
-            if (!wishList.isEmpty()) {
-                setNoData(false);
-                System.out.println("Stocks retrieve = " + getWishList().size());
-                System.out.println("setting nodata=false");
-            } else {
-                setNoData(true);
+        } else {
+            try {
+                setWishList(new ArrayList<>());
+                setWishList(dao.wishList(getUserId()));
+                if (!wishList.isEmpty()) {
+                    setNoData(false);
+                    System.out.println("Stocks retrieve = " + getWishList().size());
+                    System.out.println("setting nodata=false");
+                } else {
+                    setNoData(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            } 
-           catch (Exception e) {
-            e.printStackTrace();
-          }
-        return "WISHLIST";
-       }
+            return "WISHLIST";
+        }
     }
+
     public String updateStockList() {
         Admin dao = new Admin();
         HttpSession session = ServletActionContext.getRequest().getSession(false);
@@ -249,65 +242,67 @@ public String StockInfo()
             return "LOGOUT1";
         } else {
             try {
-            int i = dao.updateStockLists(getCsvFilePath());
-            if (i > 0) {
-                setMsg("Stocks updated successfully");
-            } else {
-                setMsg("error");
+                int i = dao.updateStockLists(getCsvFilePath());
+                if (i > 0) {
+                    setMsg("Stocks updated successfully");
+                } else {
+                    setMsg("error");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            return "UPDATESTOCKLIST";
         }
 
-        return "UPDATESTOCKLIST";
-        }
-        
     }
-     public String deleteWishlist() {
+
+    public String deleteWishlist() {
         Admin dao = new Admin();
         HttpSession session = ServletActionContext.getRequest().getSession(false);
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
         } else {
             try {
-            int i = dao.deleteWishlist(getId(), getUserId());
-            if (i > 0) {
-                int j=dao.counterCart(getUserId());
-                session.setAttribute("addtocart", j);
-                setMsg("Removed from wishlist successfully");
-            } else {
-                setMsg("error");
+                int i = dao.deleteWishlist(getId(), getUserId());
+                if (i > 0) {
+                    int j = dao.counterCart(getUserId());
+                    session.setAttribute("addtocart", j);
+                    setMsg("Removed from wishlist successfully");
+                } else {
+                    setMsg("error");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            return "REMOVEWISHLIST";
         }
 
-        return "REMOVEWISHLIST";
-        }
-        
     }
+
     public String deleteStock() {
         Admin dao = new Admin();
-        
+
         HttpSession session = ServletActionContext.getRequest().getSession(false);
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
         } else {
             try {
-            int isDeleted = dao.deleteStock(getStockId());
-            if (isDeleted > 0) {
-                setMsg("Stocks updated successfully");
-            } else {
-                setMsg("Some error");
+                int isDeleted = dao.deleteStock(getStockId());
+                if (isDeleted > 0) {
+                    setMsg("Stocks updated successfully");
+                } else {
+                    setMsg("Some error");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            return "DELETESTOCK";
         }
-        return "DELETESTOCK";
-        }
-        
+
     }
 
     public String StockAddToCartAction() {
@@ -315,136 +310,127 @@ public String StockInfo()
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
         } else {
-             try {
-            setStockList(new ArrayList<>());
-            setStockList(getAdmin().reportStock());
+            try {
+                setStockList(new ArrayList<>());
+                setStockList(getAdmin().reportStock());
 
-            if (!stockList.isEmpty()) {
-                setNoData(false);
-                System.out.println("Stocks retrieve = " + getStockList().size());
-                System.out.println("setting nodata=false");
-            } else {
-                setNoData(true);
+                if (!stockList.isEmpty()) {
+                    setNoData(false);
+                    System.out.println("Stocks retrieve = " + getStockList().size());
+                    System.out.println("setting nodata=false");
+                } else {
+                    setNoData(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "REPORTSTOCK";
+            return "REPORTSTOCK";
         }
 
-       
     }
 
     public String addToCart() {
         HttpSession session = ServletActionContext.getRequest().getSession(false);
-        
+
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
         } else {
-             try {
-                 if (getAvailability() >= getQuantity() && getQuantity()>0) 
-                 {
-                        Admin dao = new Admin();
-                        double TotalPrice=getQuantity()*getPrice();
-                        
-                       int k=dao.addToCart(getUserId(),getStockId(),getAvailability(),getQuantity(),TotalPrice);
-                       if(k >0)
-                       {
-                           
-                            int j=dao.counterCart(getUserId());
-                            session.setAttribute("addtocart", j);
-                            setAddtocart(j);
+            try {
+                if (getAvailability() >= getQuantity() && getQuantity() > 0) {
+                    Admin dao = new Admin();
+                    double TotalPrice = getQuantity() * getPrice();
 
-                       }            
-             }
-        } catch (Exception e) {
-            e.printStackTrace();
+                    int k = dao.addToCart(getUserId(), getStockId(), getAvailability(), getQuantity(), TotalPrice);
+                    if (k > 0) {
+
+                        int j = dao.counterCart(getUserId());
+                        session.setAttribute("addtocart", j);
+                        setAddtocart(j);
+
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "ADDTOCART";
+
         }
-        return "ADDTOCART";
-       
-        }
-       
+
     }
-    
-    public String buyStock()
-    {
-         Admin dao = new Admin();
+
+    public String buyStock() {
+        Admin dao = new Admin();
         HttpSession session = ServletActionContext.getRequest().getSession(false);
-        
+
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
-        } 
-        else {
+        } else {
             try {
-                
-            int isBuy = dao.buyStock(getId(),getStockId(),getAvailability(),getQuantity(), getUserId(), getTotalPrice());
-            if (isBuy > 0) {
-                int j=dao.counterCart(getUserId());
-                session.setAttribute("addtocart", j);
-                setMsg("purchsed successfully");
-            } else {
-                setMsg("Some error");
+
+                int isBuy = dao.buyStock(getId(), getStockId(), getAvailability(), getQuantity(), getUserId(), getTotalPrice());
+                if (isBuy > 0) {
+                    int j = dao.counterCart(getUserId());
+                    session.setAttribute("addtocart", j);
+                    setMsg("purchsed successfully");
+                } else {
+                    setMsg("Some error");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+
         }
-            
-        }
-        
+
         return "BUYSTOCK";
     }
-    public String sellStock()
-    {
-         Admin dao = new Admin();
+
+    public String sellStock() {
+        Admin dao = new Admin();
         HttpSession session = ServletActionContext.getRequest().getSession(false);
-        
+
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
-        } 
-        else {
-            if(getQuantityOrdered()>=getSellQuantity() && getSellQuantity()>0)
-            {
+        } else {
+            if (getQuantityOrdered() >= getSellQuantity() && getSellQuantity() > 0) {
                 try {
-                
-            int isSell = dao.sellStock(getUserId(),getOrderId(),getStockId(),getQuantityOrdered(),getSellQuantity(), getTotalPrice());
-            if (isSell > 0) {
-                setMsg("sold successfully");
-            } else {
-                setMsg("Some error");
+                    int isSell = dao.sellStock(getUserId(), getOrderId(), getStockId(), getQuantityOrdered(), getSellQuantity(), getTotalPrice());
+                    if (isSell > 0) {
+                        setMsg("sold successfully");
+                    } else {
+                        setMsg("Some error");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-            
-        }
-            }
-            
-        
+
         return "SELLSTOCK";
     }
+
     public String StockOrderAction() {
         HttpSession session = ServletActionContext.getRequest().getSession(false);
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
         } else {
-             try {
-            setOrderList(new ArrayList<>());
-            setOrderList(getAdmin().orderList(getUserId()));
+            try {
+                setOrderList(new ArrayList<>());
+                setOrderList(getAdmin().orderList(getUserId()));
 
-            if (!orderList.isEmpty()) {
-                setNoData(false);
-                System.out.println("Stocks retrieve = " + getOrderList().size());
-                System.out.println("setting nodata=false");
-            } else {
-                setNoData(true);
+                if (!orderList.isEmpty()) {
+                    setNoData(false);
+                    System.out.println("Stocks retrieve = " + getOrderList().size());
+                    System.out.println("setting nodata=false");
+                } else {
+                    setNoData(true);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "REPORTORDERSTOCK";
+            return "REPORTORDERSTOCK";
         }
 
-       
     }
 
     /**
@@ -642,7 +628,7 @@ public String StockInfo()
     public void setAddtocart(int addtocart) {
         this.addtocart = addtocart;
     }
-    
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -741,6 +727,4 @@ public String StockInfo()
     /**
      * @return the orderList
      */
-  
-
 }

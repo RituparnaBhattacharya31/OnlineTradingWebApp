@@ -34,34 +34,69 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
-
-            function sell(oid)
+             $(document).ready(function() {
+              $("#alert").hide(); 
+              $('#alertwrong').hide();
+              $("#close").click(function () {
+                  $('#alert').hide();
+             });
+             $("#closewrong").click(function () {
+                  $('#alertwrong').hide();
+             });
+             
+             });
+            function sell(oid, sid)
             {
-                var stockId = document.getElementById("stid").value;
-                console.log(stockId);
                 var stockName = document.getElementById("stname_" + oid).value;
                 var quantity = document.getElementById("qty_" + oid).value;
                 var sellQuantity = document.getElementById("sqty_" + oid).value;
                 var totalPrice = document.getElementById("tprice_" + oid).value;
-                if(sellQuantity>0 && sellQuantity!="" && quantity>=sellQuantity)
+                var res=parseInt(quantity)-parseInt(sellQuantity);
+                var tprice = parseInt(totalPrice)-(parseInt(sellQuantity)*(parseInt(totalPrice)/parseInt(quantity)));
+                if(parseInt(sellQuantity)>0  && parseInt(sellQuantity)<=parseInt(quantity))
                 {
-                $.ajax({
-                    url: 'sellstock',
-                    method: 'POST',
-                    data: {orderId: oid, stockId: stockId, stockName: stockName, quantityOrdered: quantity, sellQuantity: sellQuantity, totalPrice: totalPrice},
-                    success: function (resultText) {
-                        $('#result').html(resultText);
-
-                    },
-                    error: function (jqXHR, exception) {
-                        console.log('Error occured!!');
+                    if(parseInt(sellQuantity)===parseInt(quantity))
+                    {
+                         $.ajax({
+                            url: 'sellstock',
+                            method: 'POST',
+                            data: {orderId: oid, stockId: sid, stockName: stockName, quantityOrdered: quantity, sellQuantity: sellQuantity, totalPrice: totalPrice},
+                            success: function () {
+                                //$('#result').html(resultText);
+                                $('#alert').show();
+                                $('#buy_tr_'+oid).remove();
+                                $('#alertwrong').hide();
+                            },
+                            error: function (jqXHR, exception) {
+                                console.log('Error occured!!');
+                            }
+                        });
+                        
                     }
-                });
+                    else{
+                         $.ajax({
+                            url: 'sellstock',
+                            method: 'POST',
+                            data: {orderId: oid, stockId: sid, stockName: stockName, quantityOrdered: quantity, sellQuantity: sellQuantity, totalPrice: totalPrice},
+                            success: function () {
+                                //$('#result').html(resultText);
+                                $('#alert').show();
+                                $('#qty_'+oid).val(res.toString());
+                                $('#tprice_'+oid).val(tprice.toString());
+                                $('#alertwrong').hide();
+                            },
+                            error: function (jqXHR, exception) {
+                                console.log('Error occured!!');
+                            }
+                        });
+                    }
                }
                else
                {
-                  var msg="Please enter a valid sell quantity"; 
-                  $('#result3').html(msg);
+//                  var msg="Please enter a valid sell quantity"; 
+//                  $('#result3').html(msg);
+                  $('#alertwrong').show();
+                  $('#alert').hide();
                }
             
             }
@@ -81,12 +116,12 @@
                 <i class="bi bi-list toggle-sidebar-btn"></i>
             </div><!-- End Logo -->
 
-            <div class="search-bar">
+<!--            <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="#">
                     <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
-            </div><!-- End Search Bar -->
+            </div> End Search Bar -->
 
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
@@ -228,9 +263,23 @@
                     <div class="col-lg-8">
                        
                         <a href="showorderlist.action?userId=<s:property value="#session.userId"/>"><button type="button" class="btn btn-outline-primary">Show updated stocks</button></a>
-                        <span id="result"></span>
-                        <span style="color:red;" id="result3"></span>
+                        <br>
+                        <div id="alert" class="alert alert-success fade show alert-dismissible" role="alert">
+                                <strong>Stock sold Successfully!</strong>
+                                <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+<!--                        <span id="result"></span>-->
+                        <div id="alertwrong" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Sell quantity should be > 1 and < = quantity ordered !
+                            <button type="button" class="close" id="closewrong" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+<!--                        <span style="color:red;" id="result3"></span>-->
                         <table class="table table-borderless">
+                            
                             <s:if test="noData==false">
                                 <thead>      
                                     <tr>
@@ -244,7 +293,7 @@
                                 </thead>
                                 <tbody>
                                     <s:iterator value="orderList">
-                                        <tr id="buy_tr">
+                                        <tr id='buy_tr_<s:property value="orderId" />'>
                                             <td style="display:none"><input type="text" id='userId' value='<s:property value="#session.userId" />' readonly></td>
                                             <td style="display:none"><input type="text" id='stid' value='<s:property value="stockId" />' readonly></td>
 
@@ -255,7 +304,7 @@
                                             <td><input type="number" id='sqty_<s:property value="orderId" />' value=''></td>
 
 
-                                            <td style="display:inline-block"><button type="submit" onclick="sell(<s:property value="orderId" />)" class="btn btn-outline-primary">Sell</button>
+                                            <td style="display:inline-block"><button type="submit" onclick="sell(<s:property value="orderId" />, <s:property value="stockId" />)" class="btn btn-outline-primary">Sell</button>
 
                                             </td>
                                             <!-- comment -->
@@ -267,7 +316,9 @@
                             </table>
                         </s:if>
                         <s:else>
-                            <div style="color: red;">No Data Found.</div>
+                           <div style="margin-top:20px">
+                                <div class="alert alert-danger" role="alert" >No Data Found.</div>
+                           </div>
                         </s:else>
                     </div>
 

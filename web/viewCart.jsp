@@ -34,12 +34,21 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
-
-            function buy(sid)
+             $(document).ready(function() {
+              $("#alert").hide(); 
+              $('#alertremove').hide();
+              $("#close").click(function () {
+                  $('#alert').hide();
+             });
+             $("#closeremove").click(function () {
+                  $('#alertremove').hide();
+             });
+             
+             });
+            function buy(sid, oid, userId)
             {
-                console.log(sid);
-                var id = document.getElementById("oid").value;
-                var userId = document.getElementById("userId").value;
+               // var id = document.getElementById("oid").value;
+                // var userId = document.getElementById("userId").value;
                 var stockName = document.getElementById("stname_" + sid).value;
                 var quantity = document.getElementById("qty_" + sid).value;
                 var totalPrice = document.getElementById("tprice_" + sid).value;
@@ -47,30 +56,35 @@
                 $.ajax({
                     url: 'buystock',
                     method: 'POST',
-                    data: {id: id, stockId: sid, stockName: stockName, availability: availability, quantity: quantity, userId: userId, totalPrice: totalPrice},
+                    data: {id: oid, stockId: sid, stockName: stockName, availability: availability, quantity: quantity, userId: userId, totalPrice: totalPrice},
                     success: function (resultText) {
-                        $('#result').html(resultText);
-
+                        //$('#result').html(resultText);
+                        $('#alert').show();
+                         $('#cart_tr_'+oid).remove();
+                         $('#alertremove').hide();
                     },
                     error: function (jqXHR, exception) {
                         console.log('Error occured!!');
                     }
                 });
             }
-            function removecart()
+            function removecart(id, userId)
             {
 
-                var id = document.getElementById("oid").value;
-                console.log(id);
-                var userId = document.getElementById("userId").value;
-                console.log(userId);
+                //var id = document.getElementById("oid").value;
+                //console.log(id);
+                //var userId = document.getElementById("userId").value;
+                //console.log(userId);
+                //var rid = document.getElementById("cart_tr" + id).value;
                 $.ajax({
                     url: 'removecart',
                     method: 'POST',
                     data: {id: id, userId: userId},
                     success: function (resultText) {
-                        $('#result1').html(resultText);
-
+                        //$('#result1').html(resultText);
+                        $('#alertremove').show();
+                        $('#alert').hide();
+                        $('#cart_tr_'+id).remove();
                     },
                     error: function (jqXHR, exception) {
                         console.log('Error occured!!');
@@ -93,12 +107,12 @@
                 <i class="bi bi-list toggle-sidebar-btn"></i>
             </div><!-- End Logo -->
 
-            <div class="search-bar">
+<!--            <div class="search-bar">
                 <form class="search-form d-flex align-items-center" method="POST" action="#">
                     <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
                 </form>
-            </div><!-- End Search Bar -->
+            </div> End Search Bar -->
 
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
@@ -262,9 +276,20 @@
                                 }
                             </style>
                             <a href="showwishlist.action?userId=<s:property value="#session.userId"/>"><button type="button" class="btn btn-outline-primary">Show Updated Cart</button></a>
-                            <span id="result"></span>
-                            <span id="result1"></span>
-
+<!--                            <span id="result"></span>
+                            <span id="result1"></span>-->
+                            <div id="alert" class="alert alert-success fade show alert-dismissible" role="alert">
+                                <strong>Stock purchased Successfully!</strong>
+                                <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div id="alertremove" class="alert alert-success fade show alert-dismissible" role="alert">
+                            Stock removed Successfully!
+                            <button type="button" class="close" id="closeremove" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
                             <table id="cart_tab" class="table table-bordered table-striped table-hover">
                                 <s:if test="noData==false">
                                     <tr>
@@ -276,7 +301,7 @@
                                         <th>Action           </th>
                                     </tr>
                                     <s:iterator value="wishList">
-                                        <tr id="cart_tr">
+                                        <tr id='cart_tr_<s:property value="id" />'>
                                             <td style="display:none"><input type="text" id='userId' value='<s:property value="#session.userId" />' readonly></td>
                                             <td style="display:none"><input type="text" id='oid' value='<s:property value="id" />' readonly></td>
                                             <td><input type="text" id='stname_<s:property value="stockId" />' value='<s:property value="stockName" />' readonly></td>
@@ -284,8 +309,8 @@
                                             <td><input type="text" id='avail_<s:property value="stockId" />' value='<s:property value="availability" />' readonly></td>
                                             <td><input type="text" id='tprice_<s:property value="stockId" />' value='<s:property value="totalPrice" />' readonly></td>
 
-                                            <td style="display:inline-block"><button type="submit" onclick="buy(<s:property value="stockId" />)" class="btn btn-outline-primary">Buy</button>
-                                                <button type="submit" onclick="removecart()" class="btn btn-outline-primary">Remove</button>
+                                            <td style="display:inline-block"><button type="submit" onclick="buy(<s:property value="stockId" />, <s:property value="id" />,<s:property value="#session.userId" /> )" class="btn btn-outline-primary">Buy</button>
+                                                <button type="submit" onclick="removecart(<s:property value="id" />, <s:property value="#session.userId" />)" class="btn btn-outline-primary">Remove</button>
                                             </td>
                                             <!-- comment -->
                                         </tr>
@@ -296,7 +321,9 @@
                                 </table>
                             </s:if>
                             <s:else>
-                                <div style="color: red;">No Data Found.</div>
+                                <div style="margin-top:20px">
+                                <div class="alert alert-danger" role="alert" >No Data Found.</div>
+                                </div>
                             </s:else>
                         </div>
 

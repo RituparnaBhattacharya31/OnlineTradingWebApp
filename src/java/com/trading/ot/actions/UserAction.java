@@ -76,12 +76,13 @@ public class UserAction extends ActionSupport implements SessionAware {
 
     public String addUsers() {
         setAdmin(new Admin());
-
+        String from = "ExaTrade1@gmail.com";
+        String password1 = "ruyiaezzntgjyljq";
         try {
             setCtr(getAdmin().registerUser(getName(), getEmailId(), getPhoneNumber(), getDob(), getPassword(), getAddress()));
             if (getCtr() > 0) {
-
-                setMsg("Registration Successfully");
+                getAdmin().sendpass(from, password1,getEmailId(), "Password :", getPassword());
+                setMsg("User added Successfully and password sent to gmail");
             } else {
 
                 setMsg("Some error");
@@ -96,7 +97,7 @@ public class UserAction extends ActionSupport implements SessionAware {
     public String addUserSign()
     {
         String from = "ExaTrade1@gmail.com";
-        String password1 = "12we12we";
+        String password1 = "ruyiaezzntgjyljq";
         setAdmin(new Admin());
         try{
             String pass = getAdmin().generatePass();
@@ -181,10 +182,13 @@ public class UserAction extends ActionSupport implements SessionAware {
 
     public String updateOtpPassword() {
         Admin dao = new Admin();
+        String from = "ExaTrade1@gmail.com";
+        String password = "ruyiaezzntgjyljq";
         try {
             int i = dao.updateOtpPassword(getNewotp(), getNewpassword(), getConfirmpassword(), getEmailId());
             if (i > 0) {
-                setMsg("Password Updated Successfuly");
+                dao.send(from, password, getEmailId(), "Updated Password", getNewpassword());
+                setMsg("Password has updated and sent to the email successfully");
             } else {
                 setMsg("error");
             }
@@ -197,7 +201,7 @@ public class UserAction extends ActionSupport implements SessionAware {
 
     public String forgetPassword() {
         String from = "ExaTrade1@gmail.com";
-        String password = "12we12we";
+        String password = "ruyiaezzntgjyljq";
         //URL url;
         //URLConnection connection;
         setAdmin(new Admin());
@@ -267,7 +271,8 @@ public class UserAction extends ActionSupport implements SessionAware {
     }
     public String updateUserPassword() {
         Admin dao = new Admin();
-
+        String from = "ExaTrade1@gmail.com";
+        String password = "ruyiaezzntgjyljq";
         HttpSession session = ServletActionContext.getRequest().getSession(false);
         if (session == null || session.getAttribute("login") == null) {
             return "LOGOUT1";
@@ -275,7 +280,8 @@ public class UserAction extends ActionSupport implements SessionAware {
             try {
                 int i = dao.updateUserPassword(getCurpassword(), getNewpassword(), getRenewpassword(), getEmailId());
                 if (i > 0) {
-                    setMsg("Password Updated Successfuly");
+                    dao.send(from, password, getEmailId(), "Updated Password", getNewpassword());
+                    setMsg("Password has updated and sent to gmail successfully");
                 } else {
                     setMsg("error");
                 }
